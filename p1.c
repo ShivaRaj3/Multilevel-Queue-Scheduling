@@ -78,4 +78,38 @@ void calcTurnAroundTime(struct process *q,int size){
 	for(int i=0;i<size;i++){
 		q[i].turnaround_time = q[i].waiting_time + q[i].burst_time;
 	}
+
+}
+void RoundRobinAlgo(struct process *q,int size){
+	int time=0,i=0,remain=size,flag=0,wait_time=0,tat_time=0,total_times=0;
+	for(time=0,i=0;remain!=0;){
+		struct process p = q[i];
+		if(p.remaining_time<=time_quantum && p.remaining_time>0){
+			time += p.remaining_time;
+			p.remaining_time = 0;
+			flag = 1;
+		}else if(p.remaining_time>time_quantum){
+			p.remaining_time -= time_quantum;
+			time += time_quantum;
+		}
+		if(p.remaining_time==0 && flag==1){
+			remain--;
+			printf("\n%d\t\t%d\t\t\t%d\t\t\t%d\t\t\t%d",p.pid,p.priority,p.burst_time,p.waiting_time,p.turnaround_time);
+			wait_time += time -p.arrival_time - p.burst_time;
+			tat_time += time -p.arrival_time;
+			flag = 0;
+		}
+		
+		if(i==remain-1){
+			i=0;
+		}else if(q[i+1].arrival_time<time){
+			i++;
+		}else{
+			i=0;
+		}
+
+		q[i] = p;
+	}
+	printf("\nAverage Waiting Time= %f\n",wait_time*1.0/n); 
+	printf("Avg Turnaround Time = %f\n",tat_time*1.0/n); 	
 }
