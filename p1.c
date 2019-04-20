@@ -113,3 +113,33 @@ void RoundRobinAlgo(struct process *q,int size){
 	printf("\nAverage Waiting Time= %f\n",wait_time*1.0/n); 
 	printf("Avg Turnaround Time = %f\n",tat_time*1.0/n); 	
 }
+void RoundRobin(){
+	printf("\n\n===========================================================================");
+	printf("\n\t\tRound Robin\t");
+	printf("\n===========================================================================\n\n");
+
+	printf("\nPId\t\tPriority\t\tBurst Time\t\tWaiting Time\t\tTurnAround Time");
+	printf("\n================================================================================\n");
+	calcWaitingTime(q3,q3_n);
+	calcTurnAroundTime(q3,q3_n);
+
+	RoundRobinAlgo(q3,q3_n);
+}
+void PrioSortingAlgorithm(struct process *q,int size){
+	for(int i=0;i<size;i++){
+		for(int j=0;j<size;j++){
+			if(q[j].priority>q[i].priority){
+				struct process t = q[i];
+				q[i] = q[j];
+				q[j] = t;
+			}
+		}
+	}
+}
+void PrioSorting(){
+	printf("\n\n===========================================================================");
+	printf("\n\t\tPriority Sorting\t");
+	printf("\n===========================================================================\n\n");
+	PrioSortingAlgorithm(q2,q2_n);
+	printQueue(q2,q2_n);
+}
