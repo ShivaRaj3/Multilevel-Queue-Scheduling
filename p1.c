@@ -143,3 +143,41 @@ void PrioSorting(){
 	PrioSortingAlgorithm(q2,q2_n);
 	printQueue(q2,q2_n);
 }
+void FCFSAlgorithm(struct process *q,int size){
+	for(int i=0;i<size;i++){
+		for(int j=0;j<size;j++){
+			if(q[j].arrival_time>q[i].arrival_time){
+				struct process t = q[i];
+				q[i] = q[j];
+				q[j] = t;
+			}
+		}
+	}
+}
+void FCFS(){
+	printf("\n\n*********=======================***********===========================**********=========================*********");
+	printf("\n\t\tFirst Come First Serve\t");
+	printf("\n**********========================***********=====================================***********==============******\n\n");
+	FCFSAlgorithm(q1,q1_n);
+	printQueue(q1,q1_n);
+}
+int main(){
+	getInput();
+	int i=1;
+	while(n>0){
+		switch(i){
+			case 3:
+				RoundRobin();
+				break;
+			case 2:
+				PrioSorting();
+				break;
+			case 1:
+				FCFS();
+				break;
+		}
+		i++;
+		sleep(10);
+	}
+	printf("\n\n");
+}
